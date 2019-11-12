@@ -8,15 +8,23 @@ This program contains a program for a setup window, minesweeper GUI, and helper 
 Throughout gameplay, both players aim to win points. The following point values are awarded for the following actions:
 
   1:  correctly flagging a square (containing a bomb)
+  
   -1: unflagging a correctly flagged square (containing a bomb)
+  
   5:  unflagging an incorrectly flagged square (not containing a bomb)
+  
   -5: flagging an incorrectly flagged square (not containing a bomb)
+  
+  
   
 A player wins when:
 
   1: the other player clicks on a square containing a bomb
+  
   2: the player has more points that the other when:
-      a. both players pass
-      b. the number of flags placed is equivalent to the number of bombs on the grid
+  
+    a. both players pass
+  
+    b. the number of flags placed is equivalent to the number of bombs on the grid
 
 Bugs: Most background functionality is not separanted from the GUI program

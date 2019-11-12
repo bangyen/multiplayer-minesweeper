@@ -27,4 +27,9 @@ A player wins when:
   
     b. the number of flags placed is equivalent to the number of bombs on the grid
 
-Bugs: Most background functionality is not separanted from the GUI program
+Bugs: Most background functionality is not separanted from the GUI program into sweeper.py
+
+
+Author: Andrew Feikema
+
+Date: Dec. 2018

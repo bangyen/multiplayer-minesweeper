@@ -3,11 +3,14 @@ import random
 
 
 class Sweeper:
-    def __init__(self):
-        if __name__ == '__main__':    
-            self.start_game(8, 8, 10)
-        
-    def create_game(self, width, height, bombnum):
+    def __init__(self, width, height, bombnum):
+        '''Initializes lists of clicked buttons, unclicked buttons, and flagged buttons'''
+        self.clickedlist = []
+        self.buttonlist = []
+        self.flagbuttonlist = []
+        for x in range(height*width):
+            self.flagbuttonlist.append('')
+
         """initializes and writes the bomb status or neighbor status of each cell"""
         squarenum = width*height
         
@@ -83,8 +86,6 @@ class Sweeper:
         pos = random.randint(0, width*height-1)
         while self.data[pos][0] != ' ':
             pos = random.randint(0, width*height-1)
-            if self.data[pos][0] == ' ':
-                break
         return pos
     
     def setcolor(self, statnum):

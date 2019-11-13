@@ -8,9 +8,9 @@ from project.sweeper import *
 class GUI:
     def __init__(self, window, width, height, bombs):
         self.window = window
-        
+
         # creates object for helper functions
-        self.sweep = Sweeper()
+        self.sweep = Sweeper(width, height, bombs)
         
         self.status = StringVar()
         self.timer = IntVar()
@@ -25,7 +25,6 @@ class GUI:
         
         self.width = int(width)
         self.height = int(height)
-        bombs = int(bombs)
 
         self.p1scorelbl = StringVar()
         self.p2scorelbl = StringVar()        
@@ -76,21 +75,13 @@ class GUI:
         winlabel = Label(window, textvariable=self.status, font='arial 10')
         winlabel.grid(row=3, column=0, rowspan=2, columnspan=self.width, sticky=S)
         
-        '''Initializes lists of clicked buttons, unclicked buttons, and flagged buttons'''
-        self.clickedlist = []
-        self.buttonlist = []
-        self.flagbuttonlist = []
-        for x in range(height*width):
-            self.flagbuttonlist.append('')
-        
         '''Creates a range of buttons for the minesweeper board'''
         for y in range(height):
             for x in range(width):
                 b = Button(window, width=2, command=self.click_event, bg='#BBBBBB')
                 b.bind('<Button-3>', self.flag_event)
                 b.grid(row=5+y, column=x)
-                self.buttonlist.append(b)
-        self.sweep.create_game(width, height, bombs)
+                self.sweep.buttonlist.append(b)
         self.click_event()
     
     def changetimer(self):
@@ -131,7 +122,6 @@ class GUI:
                 self.p2scorelbl.set("Score: "+str(self.p2score))
                 self.status.set("Pass to Player 1:")
 
-
     def click_event(self):
         """sets the first click to a random open square to prevent the first player from losing unfairly in the first
         click"""
@@ -150,7 +140,7 @@ class GUI:
             position = cellx + celly*self.width
         
         # removes clicked cell from grid
-        self.buttonlist[position].grid_forget()
+        self.sweep.buttonlist[position].grid_forget()
         
         statnum = self.sweep.data[position][0]
         color = self.sweep.setcolor(statnum)
@@ -161,7 +151,7 @@ class GUI:
         # triggers a loss for clicking on a button above a bomb
         if statnum == "*":
             self.win("Bomb")
-        self.clickedlist.append(position)
+        self.sweep.clickedlist.append(position)
         self.clearing_loop(position)
         
     def clearing_loop(self, pos):
@@ -171,10 +161,10 @@ class GUI:
         if statnum == ' ':
             for u in self.sweep.findneighbors(pos, self.width, self.width*self.height):
                 # if the button is not clicked or flagged:
-                if u not in self.clickedlist and self.flagbuttonlist[u] == '':
+                if u not in self.sweep.clickedlist and self.sweep.flagbuttonlist[u] == '':
                     # changes the button to a label
-                    self.clickedlist.append(u)
-                    self.buttonlist[u].grid_forget()
+                    self.sweep.clickedlist.append(u)
+                    self.sweep.buttonlist[u].grid_forget()
                     statnum = self.sweep.data[u][0]
                     color = self.sweep.setcolor(statnum)
                     d = Label(self.window, width=2, bg='white', text=statnum, height=1, border=3, font='arial 9 bold',
@@ -213,14 +203,14 @@ class GUI:
             return None
         
         # forgets the old button in the position
-        self.buttonlist[position].grid_forget()
+        self.sweep.buttonlist[position].grid_forget()
         b = Button(self.window, width=2, bg=bgcol)
         # adds the new button in the position
         b.bind('<Button-3>', self.unflag_event)
         b.grid(row=5+celly, column=cellx)
         # adds the new button to the list of flag buttons to be accessed for unflagging
-        self.flagbuttonlist.pop(position)
-        self.flagbuttonlist.insert(position, b)
+        self.sweep.flagbuttonlist.pop(position)
+        self.sweep.flagbuttonlist.insert(position, b)
         # checks if there are no more flags. In that case, the game is won
         if self.flagsrem.get() == 0:
             self.win('Zero flags')
@@ -251,8 +241,8 @@ class GUI:
         else:
             return None
         # forgets flag button and restores unflagged button to grid
-        self.flagbuttonlist[position].grid_forget()
-        self.buttonlist[position].grid(row=5+celly, column=cellx)
+        self.sweep.flagbuttonlist[position].grid_forget()
+        self.sweep.buttonlist[position].grid(row=5+celly, column=cellx)
     
     def player1pass(self):
         """Passes player 1's turn and updates score"""

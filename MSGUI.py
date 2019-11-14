@@ -136,7 +136,7 @@ class GUI:
             y = self.window.winfo_pointery() - self.window.winfo_rooty()
             # calculates cell based on cursor position
             cellx = x//24
-            celly = (y-130)//26
+            celly = (y-94)//26
             position = cellx + celly*self.width
         
         # removes clicked cell from grid
@@ -177,7 +177,7 @@ class GUI:
         x = self.window.winfo_pointerx() - self.window.winfo_rootx()
         y = self.window.winfo_pointery() - self.window.winfo_rooty()
         cellx = x//24
-        celly = (y-130)//26
+        celly = (y-94)//26
         position = cellx + celly*self.width
         
         # sets different flagging effects for different turn status

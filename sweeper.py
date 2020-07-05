@@ -76,22 +76,8 @@ class Sweeper:
     @staticmethod
     def setcolor(statnum):
         """Returns the color associated with the number of bombs surrounding a minesweeper cell"""
-        col = 'black'
-        if statnum == '1':
-            col = 'blue'
-        elif statnum == '2':
-            col = 'green'
-        elif statnum == '3':
-            col = 'red'
-        elif statnum == '4':
-            col = 'purple'
-        elif statnum == '5':
-            col = 'maroon'
-        elif statnum == '6':
-            col = 'turquoise'
-        elif statnum == '8':
-            col = 'gray'
-        return col
+        col = 'black blue green red purple maroon turquoise gray'.split()
+        return col[int(statnum)]
     
     @staticmethod
     def findneighbors(x, width, squarenum):

@@ -1,5 +1,5 @@
 # Multiplayer Minesweeper
-Pass-and-Play Multiplayer Minesweeper Game, written entirely in Python using TKinter
+Pass-and-play multiplayer minesweeper game, written entirely in Python using TKinter.
 
 ## About
 This program contains a program for a setup window, minesweeper GUI, and helper functions for the GUI. The setup window gives the height, width, and number of bombs in the game as input values to the minesweeper GUI. Bombs are randomly placed in the minesweeper grid and the game runs with standard minesweeper funcitonality. The twist of "multiplayer minesweeper" is that there is a timer running throughout gameplay that controls, in cycles, which player can flag/unflag squares possibly containing bombs and clear squares on the board. There are also passing stages between players' stages in which no player can perform these actions so the mouse can be passed.
@@ -19,6 +19,7 @@ A player wins when:
   - The number of flags placed is equivalent to the number of bombs on the grid
   - Both players pass
 
+## Notes
 Bugs: Most background functionality is not separanted from the GUI program into `sweeper.py` \
 Author: Andrew Feikema \
 Date: Dec. 2018
